@@ -1,10 +1,11 @@
 "use client";
-import auth from "@/lib/auth";
+import useAppSessionTokenStore from "@/lib/store/AppSessionToken.store";
+import getAppSessionToken from "@/lib/utils/getAppSessionToken";
 import AutoForm, { AutoFormSubmit } from "@ui/auto-form";
+import { redirect } from "next/navigation";
 import { useState } from "react";
 import * as z from "zod";
 import AuthFormSkeleton from "./AuthFormSkeleton";
-import useAppSessionTokenStore from "@/lib/store/AppSessionToken.store";
 
 // Define your form schema using zod
 const formSchema = z.object({
@@ -25,12 +26,16 @@ const formSchema = z.object({
 
 const AuthForm = () => {
   const [waitSessionToken, setWaitSessionToken] = useState(false);
-  const { appSessionToken } = useAppSessionTokenStore();
-
+  const { appSessionToken, setAppSessionToken } = useAppSessionTokenStore();
+  
+  if (appSessionToken) {
+    redirect("/dashboard");
+  }
 
   const handleSubmit = async (data: { login: string; password: string }) => {
     setWaitSessionToken(true);
-    auth(data)
+    const token = await getAppSessionToken(data);
+    setAppSessionToken(token.appSessionToken);
   };
 
   if (waitSessionToken) {
@@ -67,7 +72,6 @@ const AuthForm = () => {
       {/*
       All children passed to the form will be rendered below the form.
       */}
-      <p>{appSessionToken}</p>
     </AutoForm>
   );
 };

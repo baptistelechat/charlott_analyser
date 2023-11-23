@@ -1,27 +1,17 @@
 "use client";
-import { Input } from "@/components/ui/input";
 import useAppSessionTokenStore from "@/lib/store/AppSessionToken.store";
-import { useRouter } from "next/navigation";
+import { redirect } from "next/navigation";
 
 const page = () => {
-  // const router = useRouter();
-  const {appSessionToken} = useAppSessionTokenStore();
+  const appSessionToken = useAppSessionTokenStore((s) => s.appSessionToken);
 
-  // if (appSessionToken === "") {
-  //   router.replace("/");
-  // }
+  if (appSessionToken === "") {
+    redirect("/");
+  }
 
   return (
     <div>
-      <p className="text-primary">{appSessionToken}</p>
-      <Input
-        value={appSessionToken}
-        onChange={(e) =>
-          useAppSessionTokenStore
-            .getState()
-            .setAppSessionToken(e.target.value)
-        }
-      />
+      <p>{appSessionToken}</p>
     </div>
   );
 };
