@@ -6,7 +6,6 @@ const getAppSessionToken = async (data: {
 }) => {
   try {
     const localBaseApiUrl = process.env.API_URL as string;
-    console.log(`${localBaseApiUrl}/api/charlott/app/getSessionToken`);
 
     const response = await fetch(
       `${localBaseApiUrl}/api/charlott/app/getSessionToken`,
@@ -25,8 +24,8 @@ const getAppSessionToken = async (data: {
     }
 
     const responseData = await response.json();
-    console.log("")
-    console.log("🔑 App - Session Token :", responseData.appSessionToken);
+    // console.log("")
+    // console.log("🔑 App - Session Token :", responseData.appSessionToken);
     return responseData;
   } catch (error: any) {
     console.error("Erreur lors de l'envoi des données :", error);

@@ -1,9 +1,9 @@
 "use client";
-import useAppSessionTokenStore from "@/lib/store/AppSessionToken.store";
+import useAppSessionTokenStore from "@/lib/store/appSessionToken.store";
 import getAppSessionToken from "@/lib/utils/getAppSessionToken";
 import AutoForm, { AutoFormSubmit } from "@ui/auto-form";
-import { redirect } from "next/navigation";
-import { useState } from "react";
+import { useRouter } from "next/navigation";
+import { useEffect, useState } from "react";
 import * as z from "zod";
 import AuthFormSkeleton from "./AuthFormSkeleton";
 
@@ -26,16 +26,30 @@ const formSchema = z.object({
 
 const AuthForm = () => {
   const [waitSessionToken, setWaitSessionToken] = useState(false);
-  const { appSessionToken, setAppSessionToken } = useAppSessionTokenStore();
-  
-  if (appSessionToken) {
-    redirect("/dashboard");
-  }
+  const router = useRouter();
+  const appSessionToken = useAppSessionTokenStore((s) => s.appSessionToken);
+  const setAppSessionToken = useAppSessionTokenStore(
+    (s) => s.setAppSessionToken
+  );
+
+  useEffect(() => {
+    if (!appSessionToken) {
+      if (typeof window !== "undefined") {
+        if (localStorage.getItem("APP_SESSION_TOKEN")) {
+          const token = localStorage.getItem("APP_SESSION_TOKEN") as string;
+          setAppSessionToken(token);
+          router.push("/dashboard");
+        }
+      }
+    }
+  }, []);
 
   const handleSubmit = async (data: { login: string; password: string }) => {
     setWaitSessionToken(true);
     const token = await getAppSessionToken(data);
+    localStorage.setItem("APP_SESSION_TOKEN", token.appSessionToken);
     setAppSessionToken(token.appSessionToken);
+    router.push("/dashboard");
   };
 
   if (waitSessionToken) {
