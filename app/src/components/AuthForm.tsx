@@ -1,5 +1,5 @@
 "use client";
-import useAppSessionTokenStore from "@/lib/store/appSessionToken.store";
+import useAuthStore from "@/lib/store/auth.store";
 import getAppSessionToken from "@/lib/utils/getAppSessionToken";
 import AutoForm, { AutoFormSubmit } from "@ui/auto-form";
 import { useRouter } from "next/navigation";
@@ -27,29 +27,42 @@ const formSchema = z.object({
 const AuthForm = () => {
   const [waitSessionToken, setWaitSessionToken] = useState(false);
   const router = useRouter();
-  const appSessionToken = useAppSessionTokenStore((s) => s.appSessionToken);
-  const setAppSessionToken = useAppSessionTokenStore(
-    (s) => s.setAppSessionToken
-  );
+  const auth = useAuthStore((s) => s.auth);
+  const setAuth = useAuthStore((s) => s.setAuth);
 
   useEffect(() => {
-    if (!appSessionToken) {
-      if (typeof window !== "undefined") {
-        if (localStorage.getItem("APP_SESSION_TOKEN")) {
-          const token = localStorage.getItem("APP_SESSION_TOKEN") as string;
-          setAppSessionToken(token);
-          router.push("/dashboard");
-        }
+    const isAuthEmpty =
+      auth.appSessionToken === "" || auth.login === "" || auth.password === "";
+
+    const isWindowDefined = typeof window !== "undefined";
+
+    if (isAuthEmpty && isWindowDefined) {
+      const appSessionToken = localStorage.getItem(
+        "APP_SESSION_TOKEN"
+      ) as string;
+      const login = localStorage.getItem("AUTH_LOGIN") as string;
+      const password = localStorage.getItem("AUTH_PASSWORD") as string;
+      if (appSessionToken && login && password) {
+        setAuth({
+          appSessionToken,
+          login,
+          password,
+        });
+        router.push("/dashboard");
       }
     }
   }, []);
 
   const handleSubmit = async (data: { login: string; password: string }) => {
     setWaitSessionToken(true);
-    const token = await getAppSessionToken(data);
-    localStorage.setItem("APP_SESSION_TOKEN", token.appSessionToken);
-    setAppSessionToken(token.appSessionToken);
-    router.push("/dashboard");
+    const auth = await getAppSessionToken(data);
+    if (auth) {
+      localStorage.setItem("APP_SESSION_TOKEN", auth.appSessionToken);
+      localStorage.setItem("AUTH_LOGIN", auth.login);
+      localStorage.setItem("AUTH_PASSWORD", auth.password);
+      setAuth(auth);
+      router.push("/dashboard");
+    }
   };
 
   if (waitSessionToken) {

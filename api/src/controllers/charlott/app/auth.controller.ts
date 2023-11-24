@@ -1,7 +1,8 @@
+import bcrypt from "bcrypt";
 import { Request, Response } from "express";
 import puppeteer from "puppeteer";
 
-const getSessionToken = async (req: Request, res: Response) => {
+const auth = async (req: Request, res: Response) => {
   try {
     const { login, password } = req.body;
 
@@ -64,7 +65,11 @@ const getSessionToken = async (req: Request, res: Response) => {
       await browser.close();
     }
 
-    return res.status(200).json({ appSessionToken: token });
+    const hashedPassword = await bcrypt.hash(password, 10);
+
+    return res
+      .status(200)
+      .json({ appSessionToken: token, login, password: hashedPassword });
   } catch (error: any) {
     return res.status(500).json({
       error: "Erreur lors de la récupération du jeton de session",
@@ -73,4 +78,4 @@ const getSessionToken = async (req: Request, res: Response) => {
   }
 };
 
-export default getSessionToken;
+export default auth;
