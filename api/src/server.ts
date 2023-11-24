@@ -14,8 +14,7 @@ const PORT = process.env.API_PORT;
 app.use(
   cors({
     origin: [
-      process.env.FRONTEND_URL_LOCAL as string,
-      process.env.FRONTEND_URL_PUBLIC as string,
+      process.env.FRONTEND_URL as string
     ],
   })
 );

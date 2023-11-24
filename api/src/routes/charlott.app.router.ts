@@ -1,13 +1,10 @@
 import express from "express";
+import auth from "../controllers/charlott/app/auth.controller";
 import getConsumerList from "../controllers/charlott/app/getConsumerList.controller";
-import getSessionToken from "../controllers/charlott/app/getSessionToken.controller";
-import testAppRoute from "../controllers/charlott/app/testAppRoute.controller";
 
 const charlottAppRouter = express.Router();
 
-charlottAppRouter.get("/", testAppRoute);
-
-charlottAppRouter.post("/getSessionToken", getSessionToken);
+charlottAppRouter.post("/auth", auth);
 charlottAppRouter.post("/getConsumerList", getConsumerList);
 
 export default charlottAppRouter;
