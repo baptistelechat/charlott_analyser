@@ -10,8 +10,8 @@ const GradientHeading = ({ title, from, to, heading }: IGradientHeading) => {
     return (
       <h1
         className={`font-extrabold text-transparent text-8xl bg-clip-text bg-gradient-to-r ${
-          from ?? "from-purple-400"
-        } ${to ?? "to-pink-600"}`}
+          from ?? "from-pink-300"
+        } ${to ?? "to-pink-700"}`}
       >
         {title}
       </h1>
@@ -22,8 +22,8 @@ const GradientHeading = ({ title, from, to, heading }: IGradientHeading) => {
     return (
       <h2
         className={`font-extrabold text-transparent text-6xl bg-clip-text bg-gradient-to-r ${
-          from ?? "from-purple-400"
-        } ${to ?? "to-pink-600"}`}
+          from ?? "from-pink-300"
+        } ${to ?? "to-pink-700"}`}
       >
         {title}
       </h2>
@@ -34,8 +34,8 @@ const GradientHeading = ({ title, from, to, heading }: IGradientHeading) => {
     return (
       <h3
         className={`font-extrabold text-transparent text-4xl bg-clip-text bg-gradient-to-r ${
-          from ?? "from-purple-400"
-        } ${to ?? "to-pink-600"}`}
+          from ?? "from-pink-300"
+        } ${to ?? "to-pink-700"}`}
       >
         {title}
       </h3>
@@ -46,8 +46,8 @@ const GradientHeading = ({ title, from, to, heading }: IGradientHeading) => {
     return (
       <h4
         className={`font-extrabold text-transparent text-2xl bg-clip-text bg-gradient-to-r ${
-          from ?? "from-purple-400"
-        } ${to ?? "to-pink-600"}`}
+          from ?? "from-pink-300"
+        } ${to ?? "to-pink-700"}`}
       >
         {title}
       </h4>
@@ -58,8 +58,8 @@ const GradientHeading = ({ title, from, to, heading }: IGradientHeading) => {
     return (
       <h5
         className={`font-extrabold text-transparent text-xl bg-clip-text bg-gradient-to-r ${
-          from ?? "from-purple-400"
-        } ${to ?? "to-pink-600"}`}
+          from ?? "from-pink-300"
+        } ${to ?? "to-pink-700"}`}
       >
         {title}
       </h5>
@@ -70,8 +70,8 @@ const GradientHeading = ({ title, from, to, heading }: IGradientHeading) => {
     return (
       <h6
         className={`font-extrabold text-transparent text-lg bg-clip-text bg-gradient-to-r ${
-          from ?? "from-purple-400"
-        } ${to ?? "to-pink-600"}`}
+          from ?? "from-pink-300"
+        } ${to ?? "to-pink-700"}`}
       >
         {title}
       </h6>
@@ -81,8 +81,8 @@ const GradientHeading = ({ title, from, to, heading }: IGradientHeading) => {
   return (
     <h1
       className={`font-extrabold text-transparent text-8xl bg-clip-text bg-gradient-to-r ${
-        from ?? "from-purple-400"
-      } ${to ?? "to-pink-600"}`}
+        from ?? "from-pink-300"
+      } ${to ?? "to-pink-700"}`}
     >
       {title}
     </h1>

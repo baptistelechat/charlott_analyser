@@ -4,26 +4,14 @@ import { Card, CardContent, CardHeader, CardTitle } from "../ui/card";
 import DataTable from "./DataTable";
 import DataTableControls from "./DataTableControls";
 
-const DataTableContainer = () => {
+interface IDataTableContainerProps {
+  data: any[];
+}
+
+const DataTableContainer = ({ data }: IDataTableContainerProps) => {
   const [itemPerPage, setItemPerPage] = useState("10");
   const [pageIndex, setPageIndex] = useState(1);
   const [maxPageIndex, setMaxPageIndex] = useState(0);
-
-  const data = [
-    {
-      id: "0",
-      name: "Baptiste",
-    },
-    {
-      id: "1",
-      name: "Baptiste1",
-    },
-    ,
-    {
-      id: "2",
-      name: "Baptiste2",
-    },
-  ];
 
   useEffect(() => {
     setPageIndex(1);

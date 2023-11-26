@@ -38,11 +38,11 @@ export default function RootLayout({
   }, []);
 
   return (
-    <div className="w-full h-full flex p-4">
+    <div className="w-full h-full flex p-6 gap-6">
       <Sidebar />
       <div className="w-10/12 h-full">
         <div className="w-full h-full flex flex-col justify-center items-center gap-4">
-          <GradientHeading title={formatTitle(pathname)} />
+          <GradientHeading title={formatTitle(pathname)} heading={2}/>
         {children}
         </div>
       </div>
