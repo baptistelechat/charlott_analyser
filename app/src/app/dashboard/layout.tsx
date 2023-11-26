@@ -1,7 +1,9 @@
 "use client";
+import GradientHeading from "@/components/GradientHeading";
 import Sidebar from "@/components/Sidebar";
 import useAuthStore from "@/lib/store/auth.store";
-import { redirect } from "next/navigation";
+import formatTitle from "@/lib/utils/formatTitle";
+import { redirect, usePathname } from "next/navigation";
 import { useEffect } from "react";
 
 export default function RootLayout({
@@ -11,7 +13,7 @@ export default function RootLayout({
 }) {
   const auth = useAuthStore((s) => s.auth);
   const setAuth = useAuthStore((s) => s.setAuth);
-
+  const pathname = usePathname();
 
   useEffect(() => {
   const isAuthEmpty =
@@ -38,7 +40,12 @@ export default function RootLayout({
   return (
     <div className="w-full h-full flex p-4">
       <Sidebar />
-      <div className="w-10/12 h-full">{children}</div>
+      <div className="w-10/12 h-full">
+        <div className="w-full h-full flex flex-col justify-center items-center gap-4">
+          <GradientHeading title={formatTitle(pathname)} />
+        {children}
+        </div>
+      </div>
     </div>
   );
 }

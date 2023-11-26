@@ -1,9 +1,9 @@
-import GradientHeading from "@/components/GradientHeading";
+"use client";
+
+import { usePathname } from "next/navigation";
 const page = () => {
-  return (
-    <div className="w-full h-full flex flex-col justify-center items-center gap-4">
-      <GradientHeading title="Clients" />
-    </div>
-  );
+  const pathname = usePathname();
+
+  return <p>{pathname}</p>;
 };
 export default page;
