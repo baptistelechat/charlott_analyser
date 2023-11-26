@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
 
-const getConsumerList = async (req: Request, res: Response) => {
+const getConsumers = async (req: Request, res: Response) => {
   try {
     const { sessionToken, vendorCode } = req.body;
 
@@ -49,4 +49,4 @@ const getConsumerList = async (req: Request, res: Response) => {
   }
 };
 
-export default getConsumerList;
+export default getConsumers;

@@ -1,11 +1,12 @@
 "use client";
+import Consumer from "@/lib/types/Consumer";
 import { useEffect, useState } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "../ui/card";
 import DataTable from "./DataTable";
 import DataTableControls from "./DataTableControls";
 
 interface IDataTableContainerProps {
-  data: any[];
+  data: Consumer[];
 }
 
 const DataTableContainer = ({ data }: IDataTableContainerProps) => {

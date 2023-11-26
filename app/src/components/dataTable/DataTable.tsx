@@ -1,4 +1,5 @@
 "use client";
+import Consumer from "@/lib/types/Consumer";
 import { Skeleton } from "@ui/skeleton";
 import {
   Table,
@@ -17,13 +18,7 @@ import {
 } from "lucide-react";
 
 interface IDataTableProps {
-  data: (
-    | {
-        id: string;
-        name: string;
-      }
-    | undefined
-  )[];
+  data: Consumer[];
   itemPerPage: string;
   pageIndex: number;
   setMaxPageIndex: React.Dispatch<React.SetStateAction<number>>;
@@ -107,8 +102,8 @@ const DataTable = ({
       <TableBody>
         {pageData().map((d, index) => (
           <TableRow key={index}>
-            <TableCell className="font-medium">{d?.id}</TableCell>
-            <TableCell className="font-medium">{d?.name}</TableCell>
+            <TableCell className="font-medium">{d.prenom}</TableCell>
+            <TableCell className="font-medium">{d.nom}</TableCell>
           </TableRow>
         ))}
       </TableBody>

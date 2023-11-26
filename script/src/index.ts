@@ -1,7 +1,7 @@
 import chalk from "chalk";
 import dotenv from "dotenv";
 import os from "os";
-import getConsumerList from "./data/utils/getConsumerList";
+import getConsumers from "./data/utils/getConsumers";
 import getSessionToken from "./data/utils/getSessionToken";
 
 // OS
@@ -22,8 +22,8 @@ dotenv.config();
     console.log("");
 
     // Consumer List
-    const consumerList = await getConsumerList(sessionToken);
-    console.log(`👥 ${consumerList.length} Clients / Clientes`);
+    const consumers = await getConsumers(sessionToken);
+    console.log(`👥 ${consumers.length} Clients / Clientes`);
     console.log("");
   }
 })();
