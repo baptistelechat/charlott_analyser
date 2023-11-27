@@ -19,7 +19,7 @@ const DataTableContainer = ({ data }: IDataTableContainerProps) => {
   }, []);
 
   return (
-    <Card className="w-full">
+    <Card className="w-full h-full">
       <CardHeader>
         <CardTitle className="flex justify-between">
           Tableau de données

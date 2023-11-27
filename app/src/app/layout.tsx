@@ -25,7 +25,7 @@ export default function RootLayout({
           enableSystem
           disableTransitionOnChange
         >
-          <div className="absolute bottom-8 right-8">
+          <div className="absolute bottom-8 right-8 z-50">
             <ThemeToggle />
           </div>
           {children}

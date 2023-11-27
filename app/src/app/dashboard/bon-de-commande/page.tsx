@@ -1,9 +1,6 @@
 "use client";
 
-import { usePathname } from "next/navigation";
 const page = () => {
-  const pathname = usePathname();
-
-  return <p>{pathname}</p>;
+  return <></>;
 };
 export default page;

@@ -59,11 +59,6 @@ const page = () => {
     }
   }, [auth]);
 
-  return (
-    <>
-      <p>{pathname}</p>
-      <DataTableContainer data={consumers} />
-    </>
-  );
+  return <DataTableContainer data={consumers} />;
 };
 export default page;

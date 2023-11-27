@@ -1,6 +1,7 @@
 "use client";
 import GradientHeading from "@/components/GradientHeading";
 import Sidebar from "@/components/Sidebar";
+import { ScrollArea } from "@/components/ui/scroll-area";
 import useAuthStore from "@/lib/store/auth.store";
 import formatTitle from "@/lib/utils/formatTitle";
 import { redirect, usePathname } from "next/navigation";
@@ -40,14 +41,14 @@ export default function RootLayout({
   }, []);
 
   return (
-    <div className="w-full h-full flex p-6 gap-6">
+    <div className="w-full h-full flex p-6 pr-0 gap-6">
       <Sidebar />
-      <div className="w-10/12 h-full">
-        <div className="w-full h-full flex flex-col justify-center items-center gap-4">
+      <ScrollArea className="w-10/12 h-full pl-2 pr-6">
+        <div className="w-full h-full flex flex-col justify-center items-start gap-4">
           <GradientHeading title={formatTitle(pathname)} heading={2} />
           {children}
         </div>
-      </div>
+      </ScrollArea>
     </div>
   );
 }
