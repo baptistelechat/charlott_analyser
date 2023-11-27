@@ -23,6 +23,7 @@ type Consumer = {
   taille_bas: number | null;
   tour_poitrine: number | null;
   profondeur_bonnet: number | null;
+  [key: string]: number | string | boolean | null;
 };
 
 export default Consumer;

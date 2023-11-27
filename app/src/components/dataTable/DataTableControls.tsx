@@ -1,7 +1,6 @@
 "use client";
-import React from "react";
-import SpeedTestDataTablePagination from "./DataTablePagination";
-import SpeedTestDataTableSelect from "./DataTableSelect";
+import DataTablePagination from "./DataTablePagination";
+import DataTableSelect from "./DataTableSelect";
 
 interface IDataTableControlsProps {
   itemPerPage: string;
@@ -10,6 +9,7 @@ interface IDataTableControlsProps {
   setPageIndex: React.Dispatch<React.SetStateAction<number>>;
   maxPageIndex: number;
   style?: string;
+  dataType?: string;
 }
 
 const DataTableControls = ({
@@ -19,14 +19,16 @@ const DataTableControls = ({
   setPageIndex,
   maxPageIndex,
   style,
+  dataType,
 }: IDataTableControlsProps) => {
   return (
     <div className={`${style} flex gap-4`}>
-      <SpeedTestDataTableSelect
+      <DataTableSelect
+        dataType={dataType}
         itemPerPage={itemPerPage}
         setItemPerPage={setItemPerPage}
       />
-      <SpeedTestDataTablePagination
+      <DataTablePagination
         pageIndex={pageIndex}
         setPageIndex={setPageIndex}
         maxPageIndex={maxPageIndex}

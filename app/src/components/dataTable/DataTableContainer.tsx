@@ -7,9 +7,25 @@ import DataTableControls from "./DataTableControls";
 
 interface IDataTableContainerProps {
   data: Consumer[];
+  tableHead: {
+    title: string;
+    icon: JSX.Element;
+  }[];
+  tableCell: {
+    parameter: string | string[];
+    action?: string;
+  }[];
+  title?: string;
+  dataType?: string;
 }
 
-const DataTableContainer = ({ data }: IDataTableContainerProps) => {
+const DataTableContainer = ({
+  data,
+  title,
+  dataType,
+  tableHead,
+  tableCell,
+}: IDataTableContainerProps) => {
   const [itemPerPage, setItemPerPage] = useState("10");
   const [pageIndex, setPageIndex] = useState(1);
   const [maxPageIndex, setMaxPageIndex] = useState(0);
@@ -22,7 +38,7 @@ const DataTableContainer = ({ data }: IDataTableContainerProps) => {
     <Card className="w-full h-full">
       <CardHeader>
         <CardTitle className="flex justify-between">
-          Tableau de données
+          {title ?? "Tableau de données"}
           {maxPageIndex !== 0 ? (
             <DataTableControls
               itemPerPage={itemPerPage}
@@ -31,6 +47,7 @@ const DataTableContainer = ({ data }: IDataTableContainerProps) => {
               setPageIndex={setPageIndex}
               maxPageIndex={maxPageIndex}
               style="hidden sm:flex"
+              dataType={dataType}
             />
           ) : (
             <p className="text-red-300 italic font-normal text-base">
@@ -42,6 +59,8 @@ const DataTableContainer = ({ data }: IDataTableContainerProps) => {
       <CardContent className="flex flex-col items-center gap-4">
         <DataTable
           data={data}
+          tableHead={tableHead}
+          tableCell={tableCell}
           itemPerPage={itemPerPage}
           pageIndex={pageIndex}
           setMaxPageIndex={setMaxPageIndex}
@@ -53,6 +72,7 @@ const DataTableContainer = ({ data }: IDataTableContainerProps) => {
             pageIndex={pageIndex}
             setPageIndex={setPageIndex}
             maxPageIndex={maxPageIndex}
+            dataType={dataType}
           />
         ) : (
           <></>

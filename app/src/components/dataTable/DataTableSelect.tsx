@@ -1,27 +1,34 @@
 "use client";
 import {
   Select,
-  SelectTrigger,
-  SelectValue,
   SelectContent,
   SelectItem,
+  SelectTrigger,
+  SelectValue,
 } from "@ui/select";
 
 interface IDataTableSelectProps {
   itemPerPage: string;
   setItemPerPage: React.Dispatch<React.SetStateAction<string>>;
+  dataType?: string;
 }
 
 const DataTableSelect = ({
   itemPerPage,
   setItemPerPage,
+  dataType,
 }: IDataTableSelectProps) => {
   const options = ["10", "20", "50", "100"];
 
   return (
     <div className="flex gap-2 items-center text-base font-normal">
-      <p className="hidden md:block">Nombre de test par page :</p>
-      <Select onValueChange={setItemPerPage} defaultValue={itemPerPage}>
+      <p className="hidden md:block">
+        Nombre de {dataType ?? "objet"} par page :
+      </p>
+      <Select
+        onValueChange={setItemPerPage}
+        value={itemPerPage}
+      >
         <SelectTrigger className="w-20 ">
           <SelectValue placeholder={itemPerPage} />
         </SelectTrigger>
