@@ -22,7 +22,7 @@ const page = () => {
         consumers ? setConsumers(consumers) : setConsumers([]);
       });
     }
-  }, []);
+  }, [auth]);
 
   return (
     <>

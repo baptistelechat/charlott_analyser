@@ -23,7 +23,7 @@ const DataTableContainer = ({ data }: IDataTableContainerProps) => {
       <CardHeader>
         <CardTitle className="flex justify-between">
           Tableau de données
-          {data.length !== 0 ? (
+          {maxPageIndex !== 0 ? (
             <DataTableControls
               itemPerPage={itemPerPage}
               setItemPerPage={setItemPerPage}
@@ -46,7 +46,7 @@ const DataTableContainer = ({ data }: IDataTableContainerProps) => {
           pageIndex={pageIndex}
           setMaxPageIndex={setMaxPageIndex}
         />
-        {data.length !== 0 ? (
+        {maxPageIndex !== 0 ? (
           <DataTableControls
             itemPerPage={itemPerPage}
             setItemPerPage={setItemPerPage}

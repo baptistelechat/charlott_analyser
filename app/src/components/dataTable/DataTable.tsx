@@ -9,13 +9,7 @@ import {
   TableHeader,
   TableRow,
 } from "@ui/table";
-import {
-  ArrowDownSquare,
-  ArrowUpSquare,
-  CalendarDays,
-  Gauge,
-  Link,
-} from "lucide-react";
+import { CalendarDays, Link } from "lucide-react";
 
 interface IDataTableProps {
   data: Consumer[];
@@ -36,30 +30,37 @@ const DataTable = ({
       setMaxPageIndex(maxFullPage + 1);
 
       if (maxFullPage >= pageIndex) {
-        return data
-          .slice(
-            data.length - Number(itemPerPage) * pageIndex,
-            data.length - Number(itemPerPage) * pageIndex + Number(itemPerPage)
-          )
-          .reverse();
+        return data.slice(
+          data.length - Number(itemPerPage) * pageIndex,
+          data.length - Number(itemPerPage) * pageIndex + Number(itemPerPage)
+        );
+        // .reverse();
       } else {
-        return data
-          .slice(0, data.length - maxFullPage * Number(itemPerPage))
-          .reverse();
+        return data.slice(0, data.length - maxFullPage * Number(itemPerPage));
+        // .reverse();
       }
     }
     return [];
   };
 
-  if (data.length === 0) {
+  if (pageData().length === 0) {
     return (
-      <div className="w-full flex flex-row justify-between">
-        <Skeleton className="w-1/6 h-4 rounded-full" />
-        <Skeleton className="w-1/6 h-4 rounded-full" />
-        <Skeleton className="w-1/6 h-4 rounded-full" />
-        <Skeleton className="w-1/6 h-4 rounded-full" />
-        <Skeleton className="w-1/6 h-4 rounded-full" />
-      </div>
+      <>
+        <div className="w-full h-8"/>
+        {Array.from({ length: 11 }, (_, index) => (
+          <div
+          key={index}
+          className="w-full flex flex-row justify-between mb-4"
+          >
+            <Skeleton className="w-1/4 h-4 rounded-full" />
+            <Skeleton className="w-1/4 h-4 rounded-full" />
+            <Skeleton className="w-1/4 h-4 rounded-full" />
+          </div>
+        ))}
+        <div className="w-full flex justify-center items-center mt-6 mb-6">
+          <Skeleton className="w-1/2 h-4 rounded-full" />
+        </div>
+      </>
     );
   }
 
@@ -70,31 +71,19 @@ const DataTable = ({
           <TableHead>
             <div className="flex gap-2 items-center">
               <CalendarDays />
-              Date et heure
+              Prenom
             </div>
           </TableHead>
           <TableHead>
             <div className="flex gap-2 items-center">
               <Link />
-              ID
+              Nom
             </div>
           </TableHead>
           <TableHead>
             <div className="flex gap-2 items-center">
-              <ArrowDownSquare />
-              Download (débit descendant)
-            </div>
-          </TableHead>
-          <TableHead>
-            <div className="flex gap-2 items-center">
-              <ArrowUpSquare />
-              Upload (débit ascendant)
-            </div>
-          </TableHead>
-          <TableHead>
-            <div className="flex gap-2 items-center">
-              <Gauge />
-              Ping
+              <Link />
+              Code Postal
             </div>
           </TableHead>
         </TableRow>
@@ -102,8 +91,9 @@ const DataTable = ({
       <TableBody>
         {pageData().map((d, index) => (
           <TableRow key={index}>
-            <TableCell className="font-medium">{d.prenom}</TableCell>
-            <TableCell className="font-medium">{d.nom}</TableCell>
+            <TableCell>{d.prenom}</TableCell>
+            <TableCell>{d.nom}</TableCell>
+            <TableCell>{d.code_postal}</TableCell>
           </TableRow>
         ))}
       </TableBody>

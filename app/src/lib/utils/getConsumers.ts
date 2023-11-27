@@ -1,3 +1,5 @@
+"use server";
+
 import Consumer from "../types/Consumer";
 
 const getConsumers = async (data: {
@@ -23,9 +25,9 @@ const getConsumers = async (data: {
       throw new Error(`Erreur HTTP! Statut: ${response.status}`);
     }
 
-    const responseData = await response.json() as Consumer[];
-    console.log("")
-    console.log("👥 Consumers :", responseData);
+    const responseData = (await response.json()).consumerList as Consumer[];
+    // console.log("");
+    // console.log("👥 Consumers :", responseData.length);
     return responseData;
   } catch (error: any) {
     console.error("Erreur lors de l'envoi des données :", error);
