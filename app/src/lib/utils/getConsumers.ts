@@ -25,10 +25,16 @@ const getConsumers = async (data: {
       throw new Error(`Erreur HTTP! Statut: ${response.status}`);
     }
 
-    const responseData = (await response.json()).consumerList as Consumer[];
+    const responseData = await response.json();
+    if (responseData.consumerList.erreur) {
+      if (responseData.consumerList.erreur.code === 1025) {
+        return null;
+      }
+    }
     // console.log("");
-    // console.log("👥 Consumers :", responseData.length);
-    return responseData;
+    // console.log(responseData);
+    // console.log("👥 Consumers :", responseData.consumerList.length);
+    return responseData.consumerList as Consumer[];
   } catch (error: any) {
     console.error("Erreur lors de l'envoi des données :", error);
     return null;

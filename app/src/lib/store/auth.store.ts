@@ -1,5 +1,5 @@
 import { create } from "zustand";
-import { AuthCredentials } from "../types/AuthCredentials";
+import AuthCredentials from "../types/AuthCredentials";
 
 type AuthStoreType = {
   auth: {
