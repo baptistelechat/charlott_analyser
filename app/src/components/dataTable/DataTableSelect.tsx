@@ -10,12 +10,14 @@ import {
 interface IDataTableSelectProps {
   itemPerPage: string;
   setItemPerPage: React.Dispatch<React.SetStateAction<string>>;
+  setPageIndex: React.Dispatch<React.SetStateAction<number>>;
   dataType?: string;
 }
 
 const DataTableSelect = ({
   itemPerPage,
   setItemPerPage,
+  setPageIndex,
   dataType,
 }: IDataTableSelectProps) => {
   const options = ["10", "20", "50", "100"];
@@ -26,7 +28,10 @@ const DataTableSelect = ({
         Nombre de {dataType ?? "objet"} par page :
       </p>
       <Select
-        onValueChange={setItemPerPage}
+        onValueChange={(value) => {
+          setItemPerPage(value);
+          setPageIndex(1);
+        }}
         value={itemPerPage}
       >
         <SelectTrigger className="w-20 ">

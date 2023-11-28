@@ -27,6 +27,7 @@ const DataTableControls = ({
         dataType={dataType}
         itemPerPage={itemPerPage}
         setItemPerPage={setItemPerPage}
+        setPageIndex={setPageIndex}
       />
       <DataTablePagination
         pageIndex={pageIndex}

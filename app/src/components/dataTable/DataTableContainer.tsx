@@ -39,6 +39,8 @@ const DataTableContainer = ({
       <CardHeader>
         <CardTitle className="flex justify-between">
           {title ?? "Tableau de données"}
+          {data.length > 0 ? ` - ${data.length}` : ""}
+          {data.length > 0 ? ` ${dataType}(s)` : ""}
           {maxPageIndex !== 0 ? (
             <DataTableControls
               itemPerPage={itemPerPage}

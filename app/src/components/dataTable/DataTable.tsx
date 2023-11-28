@@ -71,9 +71,9 @@ const DataTable = ({
       if (cell.action === "mail") {
         window.open(`mailto:${content}`);
       }
-      if (cell.action === "tel") {
-        window.open(`tel:${content}`);
-      }
+      // if (cell.action === "tel") {
+      //   window.open(`tel:${content}`);
+      // }
       if (cell.action === "address") {
         window.open(`https://www.google.fr/maps/place/${content}/`);
       }

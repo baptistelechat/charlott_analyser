@@ -53,7 +53,7 @@ const page = () => {
       parameter: ["nom", "prenom"],
     },
     { parameter: "email", action: "mail" },
-    { parameter: "telephone", action: "tel" },
+    { parameter: "telephone" },
     { parameter: ["lig1", "lig2", "lig3", "lig4"], action: "address" },
     { parameter: ["code_postal", "ville"], action: "address" },
   ];
