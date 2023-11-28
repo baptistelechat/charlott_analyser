@@ -7,8 +7,6 @@ const getConsumers = async (data: {
   vendorCode: string;
 }) => {
   try {
-    console.log(data.sessionToken, data.vendorCode);
-
     const formatVendorCode = data.vendorCode.padStart(8, "0");
 
     const response = await fetch(
