@@ -5,7 +5,6 @@ type AuthStoreType = {
   auth: {
     appSessionToken: string;
     login: string;
-    password: string;
   };
   setAuth: (newAuth: Partial<AuthCredentials>) => void;
   resetAuth: () => void;
@@ -14,7 +13,6 @@ type AuthStoreType = {
 const defaultAuth: AuthCredentials = {
   appSessionToken: "",
   login: "",
-  password: "",
 };
 
 const useAuthStore = create<AuthStoreType>((set) => ({

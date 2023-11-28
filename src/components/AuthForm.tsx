@@ -31,8 +31,7 @@ const AuthForm = () => {
   const setAuth = useAuthStore((s) => s.setAuth);
 
   useEffect(() => {
-    const isAuthEmpty =
-      auth.appSessionToken === "" || auth.login === "" || auth.password === "";
+    const isAuthEmpty = auth.appSessionToken === "" || auth.login === "";
 
     const isWindowDefined = typeof window !== "undefined";
 
@@ -41,12 +40,10 @@ const AuthForm = () => {
         "APP_SESSION_TOKEN"
       ) as string;
       const login = localStorage.getItem("AUTH_LOGIN") as string;
-      const password = localStorage.getItem("AUTH_PASSWORD") as string;
-      if (appSessionToken && login && password) {
+      if (appSessionToken && login) {
         setAuth({
           appSessionToken,
           login,
-          password,
         });
         router.push("/dashboard");
       }
@@ -55,11 +52,10 @@ const AuthForm = () => {
 
   const handleSubmit = async (data: { login: string; password: string }) => {
     setWaitSessionToken(true);
-    const auth = await getAppSessionToken(data);
+    const appSessionToken = await getAppSessionToken(data);
     if (auth) {
-      localStorage.setItem("APP_SESSION_TOKEN", auth.appSessionToken);
-      localStorage.setItem("AUTH_LOGIN", auth.login);
-      localStorage.setItem("AUTH_PASSWORD", auth.password);
+      localStorage.setItem("APP_SESSION_TOKEN", appSessionToken.token);
+      localStorage.setItem("AUTH_LOGIN", data.login);
       setAuth(auth);
       router.push("/dashboard");
     }
