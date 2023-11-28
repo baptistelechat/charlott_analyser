@@ -43,9 +43,9 @@ const DataTable = ({
       });
 
       const maxFullPage = Math.floor(data.length / Number(itemPerPage));
-      setMaxPageIndex(maxFullPage + 1);
+      setMaxPageIndex(maxFullPage);
 
-      if (maxFullPage >= pageIndex) {
+      if (maxFullPage > pageIndex) {
         return sortedData
           .slice(
             sortedData.length - Number(itemPerPage) * pageIndex,
@@ -145,7 +145,9 @@ const DataTable = ({
                           : content
                       )
                     }
-                    className={cell.action ? "cursor-pointer hover:underline":""}
+                    className={
+                      cell.action ? "cursor-pointer hover:underline" : ""
+                    }
                   >
                     {content}
                   </p>
