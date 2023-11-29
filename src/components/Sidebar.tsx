@@ -1,6 +1,13 @@
 "use client";
 import useAuthStore from "@/lib/store/auth.store";
-import { HomeIcon, LogOutIcon, ShoppingCartIcon, TagIcon, UsersIcon } from "lucide-react";
+import useConsumersStore from "@/lib/store/consumers.store";
+import {
+  HomeIcon,
+  LogOutIcon,
+  ShoppingCartIcon,
+  TagIcon,
+  UsersIcon,
+} from "lucide-react";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 
@@ -25,6 +32,7 @@ const links = [
 
 const Sidebar = () => {
   const resetAuth = useAuthStore((s) => s.resetAuth);
+  const resetConsumers = useConsumersStore((s) => s.resetConsumers);
   const router = useRouter();
   const pathname = usePathname();
 
@@ -36,6 +44,7 @@ const Sidebar = () => {
     ];
     localStorageKeysToRemove.forEach((key) => localStorage.removeItem(key));
     resetAuth();
+    resetConsumers();
     router.push("/");
   };
 
@@ -53,8 +62,8 @@ const Sidebar = () => {
                 pathname === link.href
                   ? "bg-primary text-purple-50 cursor-default"
                   : // ? "bg-purple-50 dark:bg-primary text-primary dark:text-purple-50"
-                  "hover:bg-purple-50 dark:hover:bg-gray-900 hover:text-pink-500 transition-all duration-300 ease-in-out"
-                }
+                    "hover:bg-purple-50 dark:hover:bg-gray-900 hover:text-pink-500 transition-all duration-300 ease-in-out"
+              }
                 
               `}
             >

@@ -11,7 +11,7 @@ const getAppSessionToken = async (data: {
         headers: {
           "content-type": "application/x-www-form-urlencoded; charset=UTF-8",
         },
-        body: `id=${data.login}&mdp=${data.password}&format=json&code_vendeur=76150&authenticate=1`,
+        body: `id=${data.login}&mdp=${data.password}&format=json&code_vendeur=${data.login}&authenticate=1`,
         method: "POST",
       }
     );
@@ -21,6 +21,13 @@ const getAppSessionToken = async (data: {
     }
 
     const responseData = await response.json();
+
+    if (responseData.erreur) {
+      if (responseData.erreur.code === 1003) {
+        return responseData;
+      }
+    }
+    
     // console.log("");
     // console.log("🔑 App - Session Token :", responseData);
     return responseData;

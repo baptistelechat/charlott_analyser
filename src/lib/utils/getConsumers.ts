@@ -27,11 +27,13 @@ const getConsumers = async (data: {
     }
 
     const responseData = await response.json();
+
     if (responseData.erreur) {
       if (responseData.erreur.code === 1025) {
         return null;
       }
     }
+    
     // console.log("");
     // console.log(responseData);
     // console.log("👥 Consumers :", responseData.length);

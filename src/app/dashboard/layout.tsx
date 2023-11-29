@@ -21,6 +21,7 @@ export default function RootLayout({
   // Consumers
   const consumers = useConsumersStore((s) => s.consumers);
   const setConsumers = useConsumersStore((s) => s.setConsumers);
+  const resetConsumers = useConsumersStore((s) => s.resetConsumers);
   // Navigation
   const pathname = usePathname();
   const router = useRouter();
@@ -29,6 +30,7 @@ export default function RootLayout({
     const localStorageKeysToRemove = ["APP_SESSION_TOKEN", "AUTH_LOGIN"];
     localStorageKeysToRemove.forEach((key) => localStorage.removeItem(key));
     resetAuth();
+    resetConsumers();
     router.push("/");
   };
 

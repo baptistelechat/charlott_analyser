@@ -25,6 +25,7 @@ const formSchema = z.object({
 });
 
 const AuthForm = () => {
+  const [errorMessage, setErrorMessage] = useState("");
   const [waitSessionToken, setWaitSessionToken] = useState(false);
   const router = useRouter();
   const auth = useAuthStore((s) => s.auth);
@@ -53,9 +54,20 @@ const AuthForm = () => {
   const handleSubmit = async (data: { login: string; password: string }) => {
     setWaitSessionToken(true);
     const appSessionToken = await getAppSessionToken(data);
-    if (auth) {
+    if (appSessionToken.erreur) {
+      if (appSessionToken.erreur.code === 1003) {
+        setErrorMessage(
+          appSessionToken.erreur.message.replaceAll(
+            "Le code utilisateur",
+            "L'identifiant"
+          )
+        );
+        setWaitSessionToken(false);
+      }
+    } else {
       localStorage.setItem("APP_SESSION_TOKEN", appSessionToken.token);
       localStorage.setItem("AUTH_LOGIN", data.login);
+      setErrorMessage("");
       setAuth(auth);
       router.push("/dashboard");
     }
@@ -95,6 +107,7 @@ const AuthForm = () => {
       {/*
       All children passed to the form will be rendered below the form.
       */}
+      <p className="text-red-500 italic">{errorMessage}</p>
     </AutoForm>
   );
 };
