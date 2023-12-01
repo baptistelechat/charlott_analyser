@@ -1,6 +1,7 @@
 "use client";
+import { Button } from "@ui/button";
+import { Input } from "@ui/input";
 import { ChevronLeft, ChevronRight } from "lucide-react";
-import { Button } from "../ui/button";
 
 interface IDataTablePaginationProps {
   pageIndex: number;
@@ -21,7 +22,7 @@ const DataTablePagination = ({
   };
 
   return (
-    <div className="flex flex-row gap-4 items-center text-base font-normal">
+    <div className="flex flex-row gap-2 items-center text-base font-normal">
       <Button
         disabled={pageIndex === 1}
         variant="outline"
@@ -30,8 +31,14 @@ const DataTablePagination = ({
       >
         <ChevronLeft className="h-4 w-4" />
       </Button>
-      <p className="flex gap-1">
-        <span className="hidden md:block">Page</span> {pageIndex}/{maxPageIndex}
+      <p className="flex items-center gap-1">
+        <span className="hidden md:block">Page</span>
+        <Input
+          value={pageIndex}
+          onChange={(e) => setPageIndex(Number(e.target.value))}
+          className="w-11"
+        />
+        / {maxPageIndex}
       </p>
       <Button
         disabled={pageIndex === maxPageIndex}
