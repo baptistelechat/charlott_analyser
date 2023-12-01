@@ -13,6 +13,7 @@ const getAppSessionToken = async (data: {
         },
         body: `id=${data.login}&mdp=${data.password}&format=json&code_vendeur=${data.login}&authenticate=1`,
         method: "POST",
+        cache: "no-cache",
       }
     );
 
@@ -27,7 +28,7 @@ const getAppSessionToken = async (data: {
         return responseData;
       }
     }
-    
+
     // console.log("");
     // console.log("🔑 App - Session Token :", responseData);
     return responseData;

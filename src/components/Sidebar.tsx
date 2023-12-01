@@ -1,6 +1,5 @@
 "use client";
-import useAuthStore from "@/lib/store/auth.store";
-import useConsumersStore from "@/lib/store/consumers.store";
+import logout from "@/lib/utils/logout";
 import {
   HomeIcon,
   LogOutIcon,
@@ -31,22 +30,8 @@ const links = [
 ];
 
 const Sidebar = () => {
-  const resetAuth = useAuthStore((s) => s.resetAuth);
-  const resetConsumers = useConsumersStore((s) => s.resetConsumers);
   const router = useRouter();
   const pathname = usePathname();
-
-  const logout = () => {
-    const localStorageKeysToRemove = [
-      "APP_SESSION_TOKEN",
-      "AUTH_LOGIN",
-      "AUTH_PASSWORD",
-    ];
-    localStorageKeysToRemove.forEach((key) => localStorage.removeItem(key));
-    resetAuth();
-    resetConsumers();
-    router.push("/");
-  };
 
   return (
     <div className="w-2/12 h-full flex flex-col justify-between gap-2 bg-background shadow-2xl dark:shadow-gray-700/50">
@@ -75,7 +60,7 @@ const Sidebar = () => {
       </div>
       <div
         className="flex items-center justify-start gap-2 rounded-md p-4 cursor-pointer"
-        onClick={() => logout()}
+        onClick={() => logout(router)}
       >
         <LogOutIcon className="w-6" />
         <p>Se déconnecter</p>

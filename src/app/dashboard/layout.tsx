@@ -6,6 +6,7 @@ import useAuthStore from "@/lib/store/auth.store";
 import useConsumersStore from "@/lib/store/consumers.store";
 import formatTitle from "@/lib/utils/formatTitle";
 import getConsumers from "@/lib/utils/getConsumers";
+import logout from "@/lib/utils/logout";
 import { redirect, usePathname, useRouter } from "next/navigation";
 import { useEffect } from "react";
 
@@ -17,22 +18,12 @@ export default function RootLayout({
   // Auth
   const auth = useAuthStore((s) => s.auth);
   const setAuth = useAuthStore((s) => s.setAuth);
-  const resetAuth = useAuthStore((s) => s.resetAuth);
   // Consumers
   const consumers = useConsumersStore((s) => s.consumers);
   const setConsumers = useConsumersStore((s) => s.setConsumers);
-  const resetConsumers = useConsumersStore((s) => s.resetConsumers);
   // Navigation
   const pathname = usePathname();
   const router = useRouter();
-
-  const logout = () => {
-    const localStorageKeysToRemove = ["APP_SESSION_TOKEN", "AUTH_LOGIN"];
-    localStorageKeysToRemove.forEach((key) => localStorage.removeItem(key));
-    resetAuth();
-    resetConsumers();
-    router.push("/");
-  };
 
   useEffect(() => {
     const isAuthEmpty = auth.appSessionToken === "" || auth.login === "";
@@ -64,7 +55,7 @@ export default function RootLayout({
           data.then((consumers) => {
             if (consumers === null) {
               // AppSessionToken is outdated
-              logout();
+              logout(router);
             } else {
               // AppSessionToken is not outdated
               setConsumers(consumers);

@@ -1,5 +1,7 @@
 "use client";
 import Consumer from "@/lib/types/Consumer";
+import { Button } from "@ui/button";
+import { RotateCcwIcon } from "lucide-react";
 import { useEffect, useState } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "../ui/card";
 import DataTable from "./DataTable";
@@ -17,6 +19,7 @@ interface IDataTableContainerProps {
   }[];
   title?: string;
   dataType?: string;
+  refreshData: () => void;
 }
 
 const DataTableContainer = ({
@@ -25,6 +28,7 @@ const DataTableContainer = ({
   dataType,
   tableHead,
   tableCell,
+  refreshData,
 }: IDataTableContainerProps) => {
   const [itemPerPage, setItemPerPage] = useState("10");
   const [pageIndex, setPageIndex] = useState(1);
@@ -38,9 +42,18 @@ const DataTableContainer = ({
     <Card className="w-full h-full">
       <CardHeader>
         <CardTitle className="flex justify-between">
-          {title ?? "Tableau de données"}
-          {data.length > 0 ? ` - ${data.length}` : ""}
-          {data.length > 0 ? ` ${dataType}(s)` : ""}
+          <div className="flex items-center gap-4">
+            {title ?? "Tableau de données"}
+            {data.length > 0 ? ` - ${data.length}` : ""}
+            {data.length > 0 ? ` ${dataType}(s)` : ""}
+            <Button variant="outline" size="icon" onClick={() => {
+              
+              refreshData()
+              
+              }}>
+              <RotateCcwIcon className="h-4 w-4" />
+            </Button>
+          </div>
           {maxPageIndex !== 0 ? (
             <DataTableControls
               itemPerPage={itemPerPage}

@@ -19,6 +19,7 @@ const getConsumers = async (data: {
         method: "POST",
         mode: "cors",
         credentials: "include",
+        cache:  "no-cache"
       }
     );
 
