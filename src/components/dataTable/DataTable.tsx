@@ -23,6 +23,7 @@ interface IDataTableProps {
   itemPerPage: string;
   pageIndex: number;
   setMaxPageIndex: React.Dispatch<React.SetStateAction<number>>;
+  searchValue: string;
 }
 
 const DataTable = ({
@@ -32,9 +33,30 @@ const DataTable = ({
   itemPerPage,
   pageIndex,
   setMaxPageIndex,
+  searchValue,
 }: IDataTableProps) => {
   const pageData = () => {
     if (data.length > 0) {
+      if (searchValue.length > 3) {
+        const filteredData =  data
+          .filter((consumer) => {
+            const name = `${consumer.nom} ${consumer.prenom}`.toUpperCase();
+            return name.includes(searchValue.toUpperCase());
+          })
+          .slice()
+          .sort((a, b) => {
+            const nomA = String(a.nom || "").toLowerCase();
+            const nomB = String(b.nom || "").toLowerCase();
+
+            return nomB.localeCompare(nomA);
+          });
+          const maxFullPage = Math.floor(
+            filteredData.length / Number(itemPerPage)
+          );
+          setMaxPageIndex(maxFullPage);
+          return filteredData
+      }
+
       const sortedData = data.slice().sort((a, b) => {
         const nomA = String(a.nom || "").toLowerCase();
         const nomB = String(b.nom || "").toLowerCase();
@@ -42,7 +64,7 @@ const DataTable = ({
         return nomB.localeCompare(nomA);
       });
 
-      const maxFullPage = Math.floor(data.length / Number(itemPerPage));
+      const maxFullPage = Math.floor(sortedData.length / Number(itemPerPage));
       setMaxPageIndex(maxFullPage);
 
       if (maxFullPage > pageIndex) {

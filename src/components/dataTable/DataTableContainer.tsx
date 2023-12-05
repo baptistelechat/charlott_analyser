@@ -1,6 +1,7 @@
 "use client";
 import Consumer from "@/lib/types/Consumer";
 import { Button } from "@ui/button";
+import { Input } from "@ui/input";
 import { RotateCcwIcon } from "lucide-react";
 import { useEffect, useState } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "../ui/card";
@@ -33,6 +34,7 @@ const DataTableContainer = ({
   const [itemPerPage, setItemPerPage] = useState("10");
   const [pageIndex, setPageIndex] = useState(1);
   const [maxPageIndex, setMaxPageIndex] = useState(0);
+  const [searchValue, setSearchValue] = useState("");
 
   useEffect(() => {
     setPageIndex(1);
@@ -40,17 +42,27 @@ const DataTableContainer = ({
 
   return (
     <Card className="w-full h-full">
-      <CardHeader>
+      <CardHeader className="flex flex-col gap-2">
+        <Input
+          type="text"
+          placeholder="Recherche ..."
+          value={searchValue}
+          onChange={(e) => setSearchValue(e.target.value)}
+        />
         <CardTitle className="flex justify-between">
           <div className="flex items-center gap-4">
             {title ?? "Tableau de données"}
-            {data.length > 0 ? ` - ${data.length}` : ""}
-            {data.length > 0 ? ` ${dataType}(s)` : ""}
-            <Button variant="outline" size="icon" onClick={() => {
-              
-              refreshData()
-              
-              }}>
+            {searchValue.length <= 3 && data.length > 0
+              ? ` - ${data.length}`
+              : ""}
+            {searchValue.length <= 3 && data.length > 0 ? ` ${dataType}(s)` : ""}
+            <Button
+              variant="outline"
+              size="icon"
+              onClick={() => {
+                refreshData();
+              }}
+            >
               <RotateCcwIcon className="h-4 w-4" />
             </Button>
           </div>
@@ -64,6 +76,8 @@ const DataTableContainer = ({
               style="hidden sm:flex"
               dataType={dataType}
             />
+          ) : searchValue !== "" ? (
+            <></>
           ) : (
             <p className="text-red-300 italic font-normal text-base">
               Données indisponibles
@@ -79,6 +93,7 @@ const DataTableContainer = ({
           itemPerPage={itemPerPage}
           pageIndex={pageIndex}
           setMaxPageIndex={setMaxPageIndex}
+          searchValue={searchValue}
         />
         {maxPageIndex !== 0 ? (
           <DataTableControls
