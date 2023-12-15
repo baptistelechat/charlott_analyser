@@ -1,55 +1,79 @@
 "use client";
 
+import DataTableContainer from "@/components/dataTable/DataTableContainer";
+import useArticlesStore from "@/lib/store/articles.store";
 import useAuthStore from "@/lib/store/auth.store";
-import { Article } from "@/lib/types/Collection";
 import getArticles from "@/lib/utils/getArticles";
-import { useEffect, useState } from "react";
+import logout from "@/lib/utils/logout";
+import { BarcodeIcon, BoxesIcon, ShapesIcon, ShirtIcon, ShoppingBagIcon } from "lucide-react";
+import { useRouter } from "next/navigation";
 
 const page = () => {
   const auth = useAuthStore((s) => s.auth);
-  const [articles, setArticles] = useState<Article[] | null>([]);
-  const [collections, setCollections] = useState<string[]>([]);
+  const articles = useArticlesStore((s) => s.articles);
+  const setArticles = useArticlesStore((s) => s.setArticles);
+  const router = useRouter();
 
-  useEffect(() => {
-    const isAuthEmpty = auth.appSessionToken === "" || auth.login === "";
+  const refreshArticles = () => {
+    setArticles([]);
+    const data = getArticles({
+      sessionToken: auth.appSessionToken,
+    });
 
-    const isWindowDefined = typeof window !== "undefined";
-
-    if (isAuthEmpty && isWindowDefined) {
-      const appSessionToken = localStorage.getItem(
-        "APP_SESSION_TOKEN"
-      ) as string;
-
-      const data = getArticles({
-        sessionToken: appSessionToken,
-      });
-      data.then((articles) => {
-        if (articles !== null) {
-          console.log(articles)
-          setArticles(articles);
-
-          const uniqueCollections = Array.from(
-            new Set(articles.map((article) => article.collection))
-          );
-          setCollections(uniqueCollections);
+    if (data) {
+      data.then((consumers) => {
+        if (consumers === null) {
+          // AppSessionToken is outdated
+          logout(router);
+        } else {
+          // AppSessionToken is not outdated
+          setArticles(consumers);
         }
       });
     }
-  }, []);
+  };
+
+  const tableHead: {
+    title: string;
+    icon: JSX.Element;
+  }[] = [
+    {
+      title: "Collection",
+      icon: <ShoppingBagIcon />,
+    },
+    {
+      title: "Ligne / Forme",
+      icon: <ShirtIcon />,
+    },
+    {
+      title: "Disponibilité",
+      icon: <BarcodeIcon />,
+    },
+  ];
+
+    const tableCell: {
+      parameter: string | string[];
+      action?: string;
+    }[] = [
+      {
+        parameter: "collection",
+      },
+      {
+        parameter: ["ligne_libelle", "forme_libelle"],
+      },
+      {
+        parameter: ["ligne_libelle", "forme_libelle"],
+      },
+    ];
 
   return (
-    <>
-      {collections?.map((collection, index) => (
-        <p key={`collection ${index}`}>{collection}</p>
-      ))}
-      <p className="font-bold">---------------</p>
-      {articles?.map((article) => (
-        <p key={`${article.ligne_code}${article.forme_code}`}>
-          {article.ligne_libelle} {article.forme_libelle} ({article.ligne_code}/
-          {article.forme_code})
-        </p>
-      ))}
-    </>
+    <DataTableContainer
+      data={articles}
+      tableHead={tableHead}
+      tableCell={tableCell}
+      dataType="articles"
+      refreshData={refreshArticles}
+    />
   );
 };
 export default page;

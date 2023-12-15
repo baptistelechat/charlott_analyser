@@ -7,9 +7,10 @@ import { useEffect, useState } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "../ui/card";
 import DataTable from "./DataTable";
 import DataTableControls from "./DataTableControls";
+import { Article } from "@/lib/types/Article";
 
 interface IDataTableContainerProps {
-  data: Consumer[];
+  data: any[];
   tableHead: {
     title: string;
     icon: JSX.Element;

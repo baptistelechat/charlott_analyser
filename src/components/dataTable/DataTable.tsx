@@ -1,5 +1,4 @@
 "use client";
-import Consumer from "@/lib/types/Consumer";
 import { Skeleton } from "@ui/skeleton";
 import {
   Table,
@@ -11,7 +10,7 @@ import {
 } from "@ui/table";
 
 interface IDataTableProps {
-  data: Consumer[];
+  data: any[];
   tableHead: {
     title: string;
     icon: JSX.Element;
@@ -38,23 +37,25 @@ const DataTable = ({
   const pageData = () => {
     if (data.length > 0) {
       if (searchValue.length > 3) {
-        const filteredData =  data
-          .filter((consumer) => {
-            const name = `${consumer.nom} ${consumer.prenom}`.toUpperCase();
-            return name.includes(searchValue.toUpperCase());
-          })
-          .slice()
-          .sort((a, b) => {
-            const nomA = String(a.nom || "").toLowerCase();
-            const nomB = String(b.nom || "").toLowerCase();
+        if (data.every((consumer) => consumer.nom || consumer.prenom)) {
+          const filteredData = data
+            .filter((consumer) => {
+              const name = `${consumer.nom} ${consumer.prenom}`.toUpperCase();
+              return name.includes(searchValue.toUpperCase());
+            })
+            .slice()
+            .sort((a, b) => {
+              const nomA = String(a.nom || "").toLowerCase();
+              const nomB = String(b.nom || "").toLowerCase();
 
-            return nomB.localeCompare(nomA);
-          });
+              return nomB.localeCompare(nomA);
+            });
           const maxFullPage = Math.floor(
             filteredData.length / Number(itemPerPage)
           );
           setMaxPageIndex(maxFullPage);
-          return filteredData
+          return filteredData;
+        }
       }
 
       const sortedData = data.slice().sort((a, b) => {

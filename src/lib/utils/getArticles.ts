@@ -1,6 +1,6 @@
 "use server";
 
-import { Article, Collection, Reference, Tarif } from "../types/Collection";
+import { Article, Collection, Reference, Tarif } from "../types/Article";
 
 const getAvailability = async (data: {
   sessionToken: string;
@@ -109,14 +109,8 @@ const getArticles = async (data: { sessionToken: string }) => {
     if (responseData.length > 0) {
       const articles: Article[] = [];
 
-      for (const collection of responseData) {
-        for (const lookbook of collection.lookbooks) {
-          const references = await getAvailability({
-            sessionToken: data.sessionToken,
-            ligne_code: lookbook.ligne_code,
-            forme_code: lookbook.forme_code,
-          });
-
+      responseData.map((collection: Collection) => {
+        collection.lookbooks.map((lookbook) => {
           const article: Article = {
             collection: collection.libelle,
             image_data: lookbook.image_data,
@@ -124,30 +118,24 @@ const getArticles = async (data: { sessionToken: string }) => {
             ligne_libelle: lookbook.ligne_lib,
             forme_code: lookbook.forme_code,
             forme_libelle: lookbook.forme_lib,
-            references: references || [],
           };
           articles.push(article);
 
-          for (const sous_ligne of lookbook.sous_lignes_secondaire || []) {
-            const referencesSousLigne = await getAvailability({
-              sessionToken: data.sessionToken,
-              ligne_code: sous_ligne.ligne_code,
-              forme_code: sous_ligne.forme_code,
-            });
-
-            const articleSousLigne: Article = {
+          lookbook.sous_lignes_secondaire?.map((sous_ligne) => {
+            const article: Article = {
               collection: collection.libelle,
               image_data: sous_ligne.image_data,
               ligne_code: sous_ligne.ligne_code,
               ligne_libelle: sous_ligne.ligne_libelle,
               forme_code: sous_ligne.forme_code,
               forme_libelle: sous_ligne.forme_libelle,
-              references: referencesSousLigne || [],
             };
-            articles.push(articleSousLigne);
-          }
-        }
-      }
+            articles.push(article);
+          });
+        });
+      });
+
+      return articles as Article[];
 
       return articles as Article[];
     } else {

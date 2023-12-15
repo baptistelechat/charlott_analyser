@@ -15,10 +15,10 @@ type Lookbook = {
   ligne_lib: string;
   forme_code: string;
   forme_lib: string;
-  sous_lignes_secondaire: ArticleWithoutAvailability[];
+  sous_lignes_secondaire: Article[];
 };
 
-export type ArticleWithoutAvailability = {
+export type Article = {
   collection: string;
   image_data: {
     zoom: ImageData;
@@ -47,10 +47,6 @@ export type Tarif = {
   pu_brut: string;
   qvp_nette: string;
   qvp_brute: string;
-};
-
-export type Article = ArticleWithoutAvailability & {
-  references?: Reference[] | null;
 };
 
 export type Collection = {
