@@ -5,7 +5,7 @@ import useArticlesStore from "@/lib/store/articles.store";
 import useAuthStore from "@/lib/store/auth.store";
 import getArticles from "@/lib/utils/getArticles";
 import logout from "@/lib/utils/logout";
-import { BarcodeIcon, BoxesIcon, ShapesIcon, ShirtIcon, ShoppingBagIcon } from "lucide-react";
+import { ShirtIcon, ShoppingBagIcon } from "lucide-react";
 import { useRouter } from "next/navigation";
 
 const page = () => {
@@ -44,27 +44,21 @@ const page = () => {
     {
       title: "Ligne / Forme",
       icon: <ShirtIcon />,
-    },
-    {
-      title: "Disponibilité",
-      icon: <BarcodeIcon />,
-    },
+    }
   ];
 
-    const tableCell: {
-      parameter: string | string[];
-      action?: string;
-    }[] = [
-      {
-        parameter: "collection",
-      },
-      {
-        parameter: ["ligne_libelle", "forme_libelle"],
-      },
-      {
-        parameter: ["ligne_libelle", "forme_libelle"],
-      },
-    ];
+  const tableCell: {
+    parameter: string | string[];
+    action?: string;
+  }[] = [
+    {
+      parameter: "collection",
+    },
+    {
+      parameter: ["ligne_libelle", "forme_libelle"],
+      action: "available_link",
+    },
+  ];
 
   return (
     <DataTableContainer

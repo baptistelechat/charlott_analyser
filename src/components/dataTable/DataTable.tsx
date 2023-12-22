@@ -1,4 +1,6 @@
 "use client";
+import { ImageData } from "@/lib/types/Article";
+import simplifiedImagesData from "@/lib/utils/simplifiedImagesData";
 import { Skeleton } from "@ui/skeleton";
 import {
   Table,
@@ -8,6 +10,13 @@ import {
   TableHeader,
   TableRow,
 } from "@ui/table";
+import Image from "next/image";
+import {
+  HoverCard,
+  HoverCardContent,
+  HoverCardTrigger,
+} from "../ui/hover-card";
+import DataTableCarrousel from "./DataTableCarrousel";
 
 interface IDataTableProps {
   data: any[];
@@ -166,6 +175,10 @@ const DataTable = ({
       if (cell.action === "address") {
         window.open(`https://www.google.fr/maps/place/${content}/`);
       }
+      if (cell.action.includes("link")) {
+        const link = content as string;
+        window.open(link);
+      }
     }
   };
 
@@ -223,23 +236,38 @@ const DataTable = ({
 
               return (
                 <TableCell key={cellIndex}>
-                  <p
-                    onClick={() =>
-                      handleAction(
-                        cell,
-                        cell.action === "address"
-                          ? `${d.lig1 ?? ""} ${d.lig2 ?? ""} ${d.lig3 ?? ""} ${
-                              d.lig4 ?? ""
-                            } - ${d.code_postal} ${d.ville}`
-                          : content
-                      )
-                    }
-                    className={
-                      cell.action ? "cursor-pointer hover:underline" : ""
-                    }
-                  >
-                    {content}
-                  </p>
+                  <HoverCard>
+                    <HoverCardTrigger>
+                      <p
+                        onClick={() =>
+                          handleAction(
+                            cell,
+                            cell.action === "address"
+                              ? `${d.lig1 ?? ""} ${d.lig2 ?? ""} ${
+                                  d.lig3 ?? ""
+                                } ${d.lig4 ?? ""} - ${d.code_postal} ${d.ville}`
+                              : cell.action === "available_link"
+                              ? `https://www.charlott.fr/dressing/product/${d.ligne_code}/article/${d.forme_code}/`
+                              : content
+                          )
+                        }
+                        className={
+                          cell.action ? "cursor-pointer hover:underline" : ""
+                        }
+                      >
+                        {content}
+                      </p>
+                    </HoverCardTrigger>
+                    {d.images_data ? (
+                      <HoverCardContent>
+                        <DataTableCarrousel
+                          images={simplifiedImagesData(d.images_data)}
+                        />
+                      </HoverCardContent>
+                    ) : (
+                      <></>
+                    )}
+                  </HoverCard>
                 </TableCell>
               );
             })}

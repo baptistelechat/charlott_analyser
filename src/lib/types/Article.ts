@@ -1,16 +1,11 @@
-type ImageData = {
+export type ImageData = {
   url: string;
   width: number;
   height: number;
 };
 
 type Lookbook = {
-  image_data: {
-    zoom: ImageData;
-    desktop: ImageData;
-    mobile: ImageData;
-    sous_ligne: ImageData;
-  };
+  image_data: ImageData[];
   ligne_code: string;
   ligne_lib: string;
   forme_code: string;
@@ -20,12 +15,7 @@ type Lookbook = {
 
 export type Article = {
   collection: string;
-  image_data: {
-    zoom: ImageData;
-    desktop: ImageData;
-    mobile: ImageData;
-    sous_ligne: ImageData;
-  };
+  images_data: ImageData[];
   ligne_code: string;
   ligne_libelle: string;
   forme_code: string;

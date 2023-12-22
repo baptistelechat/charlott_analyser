@@ -1,6 +1,12 @@
 "use server";
 
-import { Article, Collection, Reference, Tarif } from "../types/Article";
+import {
+  Article,
+  Collection,
+  ImageData,
+  Reference,
+  Tarif,
+} from "../types/Article";
 
 const getAvailability = async (data: {
   sessionToken: string;
@@ -113,7 +119,16 @@ const getArticles = async (data: { sessionToken: string }) => {
         collection.lookbooks.map((lookbook) => {
           const article: Article = {
             collection: collection.libelle,
-            image_data: lookbook.image_data,
+            images_data: Object.entries(lookbook.image_data).map(
+              ([key, value]) => {
+                const image: ImageData = {
+                  url: value.url,
+                  width: value.width,
+                  height: value.height,
+                };
+                return image;
+              }
+            ),
             ligne_code: lookbook.ligne_code,
             ligne_libelle: lookbook.ligne_lib,
             forme_code: lookbook.forme_code,
@@ -121,10 +136,16 @@ const getArticles = async (data: { sessionToken: string }) => {
           };
           articles.push(article);
 
-          lookbook.sous_lignes_secondaire?.map((sous_ligne) => {
+          lookbook.sous_lignes_secondaire?.map((sous_ligne:any) => {
             const article: Article = {
               collection: collection.libelle,
-              image_data: sous_ligne.image_data,
+              images_data: sous_ligne.images_data.map(
+                (image: {
+                  vignette: ImageData;
+                  normal: ImageData;
+                  zoom: ImageData;
+                }) => image.normal
+              ),
               ligne_code: sous_ligne.ligne_code,
               ligne_libelle: sous_ligne.ligne_libelle,
               forme_code: sous_ligne.forme_code,
@@ -134,8 +155,6 @@ const getArticles = async (data: { sessionToken: string }) => {
           });
         });
       });
-
-      return articles as Article[];
 
       return articles as Article[];
     } else {
