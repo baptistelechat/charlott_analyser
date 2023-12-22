@@ -38,10 +38,10 @@ const DataTablePagination = ({
           onChange={(e) => setPageIndex(Number(e.target.value))}
           className="w-11"
         />
-        / {maxPageIndex}
+        / {maxPageIndex === 0 ? 1 : maxPageIndex}
       </p>
       <Button
-        disabled={pageIndex === maxPageIndex}
+        disabled={pageIndex === maxPageIndex || maxPageIndex === 0}
         variant="outline"
         size="icon"
         onClick={handleNextPage}

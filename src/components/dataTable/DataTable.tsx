@@ -37,6 +37,7 @@ const DataTable = ({
   const pageData = () => {
     if (data.length > 0) {
       if (searchValue.length > 3) {
+        // Filter Consumers
         if (data.every((consumer) => consumer.nom || consumer.prenom)) {
           const filteredData = data
             .filter((consumer) => {
@@ -53,17 +54,82 @@ const DataTable = ({
           const maxFullPage = Math.floor(
             filteredData.length / Number(itemPerPage)
           );
+
           setMaxPageIndex(maxFullPage);
-          return filteredData;
+
+          if (maxFullPage > pageIndex) {
+            return filteredData
+              .slice(
+                filteredData.length - Number(itemPerPage) * pageIndex,
+                filteredData.length -
+                  Number(itemPerPage) * pageIndex +
+                  Number(itemPerPage)
+              )
+              .reverse();
+          } else {
+            return filteredData
+              .slice(0, filteredData.length - maxFullPage * Number(itemPerPage))
+              .reverse();
+          }
+        }
+        // Filter Articles
+        if (
+          data.every(
+            (article) => article.ligne_libelle || article.forme_libelle
+          )
+        ) {
+          const filteredData = data
+            .filter((article) => {
+              const name =
+                `${article.collection} ${article.ligne_libelle} ${article.forme_libelle}`.toUpperCase();
+              return name.includes(searchValue.toUpperCase());
+            })
+            .slice()
+            .sort((a, b) => {
+              const collectionA = String(a.collection || "").toLowerCase();
+              const collectionB = String(b.collection || "").toLowerCase();
+
+              return collectionB.localeCompare(collectionA);
+            });
+          const maxFullPage = Math.floor(
+            filteredData.length / Number(itemPerPage)
+          );
+
+          setMaxPageIndex(maxFullPage);
+
+          if (maxFullPage > pageIndex) {
+            return filteredData
+              .slice(
+                filteredData.length - Number(itemPerPage) * pageIndex,
+                filteredData.length -
+                  Number(itemPerPage) * pageIndex +
+                  Number(itemPerPage)
+              )
+              .reverse();
+          } else {
+            return filteredData
+              .slice(0, filteredData.length - maxFullPage * Number(itemPerPage))
+              .reverse();
+          }
         }
       }
 
-      const sortedData = data.slice().sort((a, b) => {
-        const nomA = String(a.nom || "").toLowerCase();
-        const nomB = String(b.nom || "").toLowerCase();
+      // No Filter
+      const sortedData = data
+        .slice()
+        .sort((a, b) => {
+          const nomA = String(a.nom || "").toLowerCase();
+          const nomB = String(b.nom || "").toLowerCase();
 
-        return nomB.localeCompare(nomA);
-      });
+          return nomB.localeCompare(nomA);
+        })
+        .slice()
+        .sort((a, b) => {
+          const collectionA = String(a.collection || "").toLowerCase();
+          const collectionB = String(b.collection || "").toLowerCase();
+
+          return collectionB.localeCompare(collectionA);
+        });
 
       const maxFullPage = Math.floor(sortedData.length / Number(itemPerPage));
       setMaxPageIndex(maxFullPage);

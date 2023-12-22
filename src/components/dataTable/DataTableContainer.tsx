@@ -1,13 +1,11 @@
 "use client";
-import Consumer from "@/lib/types/Consumer";
 import { Button } from "@ui/button";
-import { Input } from "@ui/input";
 import { RotateCcwIcon } from "lucide-react";
 import { useEffect, useState } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "../ui/card";
 import DataTable from "./DataTable";
 import DataTableControls from "./DataTableControls";
-import { Article } from "@/lib/types/Article";
+import DataTableSearchBar from "./DataTableSearchBar";
 
 interface IDataTableContainerProps {
   data: any[];
@@ -41,14 +39,19 @@ const DataTableContainer = ({
     setPageIndex(1);
   }, []);
 
+  useEffect(() => {
+    if (searchValue === "") {
+      setPageIndex(1);
+    }
+  }, [searchValue]);
+
   return (
     <Card className="w-full h-full">
       <CardHeader className="flex flex-col gap-2">
-        <Input
-          type="text"
-          placeholder="Recherche ..."
-          value={searchValue}
-          onChange={(e) => setSearchValue(e.target.value)}
+        <DataTableSearchBar
+          searchValue={searchValue}
+          setSearchValue={setSearchValue}
+          setPageIndex={setPageIndex}
         />
         <CardTitle className="flex justify-between">
           <div className="flex items-center gap-4">
@@ -56,7 +59,9 @@ const DataTableContainer = ({
             {searchValue.length <= 3 && data.length > 0
               ? ` - ${data.length}`
               : ""}
-            {searchValue.length <= 3 && data.length > 0 ? ` ${dataType}(s)` : ""}
+            {searchValue.length <= 3 && data.length > 0
+              ? ` ${dataType}(s)`
+              : ""}
             <Button
               variant="outline"
               size="icon"
@@ -67,7 +72,11 @@ const DataTableContainer = ({
               <RotateCcwIcon className="h-4 w-4" />
             </Button>
           </div>
-          {maxPageIndex !== 0 ? (
+          {data.length === 0 ? (
+            <p className="text-red-300 italic font-normal text-base">
+              Données indisponibles
+            </p>
+          ) : (
             <DataTableControls
               itemPerPage={itemPerPage}
               setItemPerPage={setItemPerPage}
@@ -77,12 +86,6 @@ const DataTableContainer = ({
               style="hidden sm:flex"
               dataType={dataType}
             />
-          ) : searchValue !== "" ? (
-            <></>
-          ) : (
-            <p className="text-red-300 italic font-normal text-base">
-              Données indisponibles
-            </p>
           )}
         </CardTitle>
       </CardHeader>
@@ -96,7 +99,7 @@ const DataTableContainer = ({
           setMaxPageIndex={setMaxPageIndex}
           searchValue={searchValue}
         />
-        {maxPageIndex !== 0 ? (
+        {data.length !== 0 ? (
           <DataTableControls
             itemPerPage={itemPerPage}
             setItemPerPage={setItemPerPage}
