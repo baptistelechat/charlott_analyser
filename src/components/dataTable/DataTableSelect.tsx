@@ -22,10 +22,18 @@ const DataTableSelect = ({
 }: IDataTableSelectProps) => {
   const options = ["10", "20", "50", "100"];
 
+  const apostrophe = ["a", "e", "i", "o", "u", "y", "h"];
+
   return (
     <div className="flex gap-2 items-center text-base font-normal">
       <p className="hidden md:block">
-        Nombre de {dataType ?? "objet"} par page :
+        Nombre{" "}
+        {dataType !== undefined
+          ? apostrophe.includes(dataType[0])
+            ? "d'"
+            : "de "
+          : ""}
+        {dataType ?? "objet"} par page :
       </p>
       <Select
         onValueChange={(value) => {
