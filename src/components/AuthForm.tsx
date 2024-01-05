@@ -1,6 +1,7 @@
 "use client";
 import useAuthStore from "@/lib/store/auth.store";
 import getAppSessionToken from "@/lib/utils/getAppSessionToken";
+import getUserData from "@/lib/utils/getUserData";
 import AutoForm, { AutoFormSubmit } from "@ui/auto-form";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
@@ -68,7 +69,6 @@ const AuthForm = () => {
       localStorage.setItem("APP_SESSION_TOKEN", appSessionToken.token);
       localStorage.setItem("AUTH_LOGIN", data.login);
       setErrorMessage("");
-      setAuth(auth);
       router.push("/dashboard");
     }
   };
