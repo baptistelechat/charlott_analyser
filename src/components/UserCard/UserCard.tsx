@@ -1,9 +1,9 @@
 "use client";
 
 import useAuthStore from "@/lib/store/auth.store";
+import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
 import { Card, CardContent, CardHeader, CardTitle } from "../ui/card";
 import UserCardItem from "./UserCardItem";
-import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
 
 const UserCard = () => {
   const auth = useAuthStore((s) => s.auth);
@@ -16,9 +16,9 @@ const UserCard = () => {
       <CardContent className="flex flex-col gap-3">
         <div className="flex items-center gap-4">
           <div>
-            <UserCardItem value={`${auth.userData.nom_complet}`} />
+            <UserCardItem value={auth.userData.nom_complet} />
             <UserCardItem value={auth.userData.adresse.denomination} />
-            <UserCardItem value={`${auth.userData.adresse.cp_ville}`} />
+            <UserCardItem value={auth.userData.adresse.cp_ville} />
           </div>
           {auth.userData.image ? (
             <Avatar>
@@ -33,24 +33,24 @@ const UserCard = () => {
         <div>
           <UserCardItem
             title="Téléphone mobile"
-            value={`${auth.userData.telephone_mobile}`}
+            value={auth.userData.telephone_mobile}
           />
           <UserCardItem
             title="Téléphone fixe"
-            value={`${auth.userData.telephone_fixe}`}
+            value={auth.userData.telephone_fixe}
           />
-          <UserCardItem title="Email" value={`${auth.userData.email}`} />
+          <UserCardItem title="Email" value={auth.userData.email} />
         </div>
         <div>
-          <UserCardItem title="Titre" value={`${auth.userData.titre}`} />
-          <UserCardItem title="Secteur" value={`${auth.userData.secteur}`} />
+          <UserCardItem title="Titre" value={auth.userData.titre} />
+          <UserCardItem title="Secteur" value={auth.userData.secteur} />
           <UserCardItem
             title="Date de démarrage"
-            value={`${auth.userData.date_demarrage}`}
+            value={auth.userData.date_demarrage}
           />
           <UserCardItem
             title="Parrain actuel"
-            value={`${auth.userData.parrain.nom_complet}`}
+            value={auth.userData.parrain.nom_complet}
           />
         </div>
       </CardContent>

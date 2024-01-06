@@ -13,6 +13,10 @@ type AuthStoreType = {
       email: string;
       telephone_fixe: string;
       telephone_mobile: string;
+      social: {
+        facebook: string;
+        instagram: string;
+      };
       titre: string;
       date_demarrage: string;
       secteur: string;
@@ -45,6 +49,10 @@ const defaultAuth: AuthCredentials = {
     email: "",
     telephone_fixe: "",
     telephone_mobile: "",
+    social: {
+      facebook: "",
+      instagram: "",
+    },
     titre: "",
     date_demarrage: "",
     secteur: "",

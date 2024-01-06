@@ -1,7 +1,6 @@
 "use client";
 import useAuthStore from "@/lib/store/auth.store";
 import getAppSessionToken from "@/lib/utils/getAppSessionToken";
-import getUserData from "@/lib/utils/getUserData";
 import AutoForm, { AutoFormSubmit } from "@ui/auto-form";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
@@ -68,6 +67,10 @@ const AuthForm = () => {
     } else {
       localStorage.setItem("APP_SESSION_TOKEN", appSessionToken.token);
       localStorage.setItem("AUTH_LOGIN", data.login);
+      const siret = localStorage.getItem(`SIRET_${data.login}`)
+      if(siret === "") {
+        localStorage.setItem(`SIRET_${data.login}`, "");
+      }
       setErrorMessage("");
       router.push("/dashboard");
     }

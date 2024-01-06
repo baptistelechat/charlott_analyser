@@ -9,6 +9,10 @@ type AuthCredentials = {
     email: string;
     telephone_fixe: string;
     telephone_mobile: string;
+    social: {
+      facebook: string;
+      instagram: string;
+    };
     titre: string;
     date_demarrage: string;
     secteur: string;

@@ -44,7 +44,8 @@ const Sidebar = () => {
               href={link.href}
               className={`flex items-center justify-start gap-2 rounded-md p-4
               ${
-                pathname === link.href ||link.href.includes(pathname.split("/")[2])
+                pathname === link.href ||
+                link.href.includes(pathname.split("/")[2])
                   ? "bg-primary text-purple-50 cursor-default"
                   : // ? "bg-purple-50 dark:bg-primary text-primary dark:text-purple-50"
                     "hover:bg-purple-50 dark:hover:bg-gray-900 hover:text-pink-500 transition-all duration-300 ease-in-out"

@@ -32,6 +32,10 @@ const getUserData = async (data: { login: string; sessionToken: string }) => {
       telephone_fixe: responseData.personne.telephone_fixe ?? "",
       telephone_mobile: responseData.personne.telephone_mobile ?? "",
       titre: responseData.titre.libelle ?? "",
+      social: {
+        facebook: responseData.personne.page_facebook ?? "",
+        instagram: responseData.personne.page_instagram ?? "",
+      },
       date_demarrage: responseData.personne.date_demarrage ?? "",
       secteur: responseData.secteur.libelle ?? "",
       adresse: {
